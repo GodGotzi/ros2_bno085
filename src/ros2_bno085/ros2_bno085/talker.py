@@ -108,7 +108,7 @@ def bno08x_node():
     rospy.loginfo(rospy.get_caller_id() + "  bno08x node finished")
 
 
-if __name__ == '__main__':
+def main():
     try:
         bno08x_node()
     except Exception:
