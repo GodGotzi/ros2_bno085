@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'ros2-bno085'
+package_name = 'ros2_bno085'
 
 setup(
     name=package_name,
