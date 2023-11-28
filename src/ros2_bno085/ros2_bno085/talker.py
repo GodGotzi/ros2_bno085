@@ -7,13 +7,13 @@ from diagnostic_msgs.msg import DiagnosticStatus
 from rclpy.node import Node
 import time
 import board
-import busio
+from adafruit_extended_bus import ExtendedI2C as I2C
 from adafruit_bno08x import (
-    BNO_REPORT_ACCELEROMETER,
-    BNO_REPORT_GYROSCOPE,
-    BNO_REPORT_MAGNETOMETER,
+    BNO_REPORT_LINEAR_ACCELERATION,
     BNO_REPORT_ROTATION_VECTOR,
+    BNO_REPORT_GYROSCOPE
 )
+
 from adafruit_bno08x.i2c import BNO08X_I2C
 
 
@@ -56,13 +56,12 @@ def bno08x_node():
     magnetic_node = MagneticNode()
     diagnostic_node = DiagnosticNode()
 
-    i2c = busio.I2C(board.SCL, board.SDA, frequency=800000)
+    i2c = I2C(3)
     bno = BNO08X_I2C(i2c, address=0x4a)  # BNO080 (0x4b) BNO085 (0x4a)
 
-    bno.enable_feature(BNO_REPORT_ACCELEROMETER)
-    bno.enable_feature(BNO_REPORT_GYROSCOPE)
-    bno.enable_feature(BNO_REPORT_MAGNETOMETER)
     bno.enable_feature(BNO_REPORT_ROTATION_VECTOR)
+    bno.enable_feature(BNO_REPORT_LINEAR_ACCELERATION)
+    bno.enable_feature(BNO_REPORT_GYROSCOPE)
 
     time.sleep(0.5)  # ensure IMU is initialized
 
